@@ -1,7 +1,5 @@
-(ns day-one
-  (:require [clojure.java.io :as io])
-  (:require [clojure.string :as st])
-  (:require [clojure.edn :as edn]))
+(ns advent-of-code.day-one
+  (:require [advent-of-code.util :as ut]))
 
 ; this will *attempt* to be more functional
 ; than the rust end of things, the rust
@@ -10,13 +8,6 @@
 
 ; since i don't know every single clojure tool,
 ; the entry point is in run
-
-(defn file-as-list [file-name]
-  (let [file (io/file file-name)]
-    (seq (st/split-lines (slurp file)))))
-
-(defn string-list-parse [string-list]
-  (map edn/read-string string-list))
 
 (defn delta-increase
   "Check if the delta between the head of the list
@@ -45,8 +36,8 @@
           (recur (rest coll) (+ incr 1))
           (recur (rest coll) incr))))))
 
-(defn run [opts]
+(defn run []
   "Entry point for a code challenge"
-  (let [input (string-list-parse (file-as-list "day_one_input"))]
+  (let [input (ut/string-list-parse (ut/file-as-list "resources/day_one.input"))]
     (println (delta-increase input))
     (println (delta-3-increase input))))
