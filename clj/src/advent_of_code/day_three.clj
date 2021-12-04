@@ -89,7 +89,7 @@
                    (- (count %1)
                       1
                       n))
-              (not truth-filter))
+              truth-filter)
           coll))
 
 
@@ -122,12 +122,14 @@
 (defn o2-rating [coll len] (gas-rating coll len 'o2))
 (defn co2-rating [coll len] (gas-rating coll len 'co2))
 
-(defn run []
+(defn run
   "Entry point to a code challenge!"
-  (let [file (ut/file-as-list "resources/day_three.input")]
+  ([] (run "resources/day_three.input"))
+  ([& opts]
+  (let [file (ut/file-as-list (first opts))]
     (let [len (count (first file))
           input (ut/string-list-parse (map #(st/join (list "2r" %)) file))]
       (println (* (bit-seq-to-num (get-common-bits input len))
                   (bit-seq-to-num (get-lcommon-bits input len))))
       (println (* (o2-rating (coll-nums-to-bits input len) len)
-                  (co2-rating (coll-nums-to-bits input len) len))))))
+                  (co2-rating (coll-nums-to-bits input len) len)))))))
