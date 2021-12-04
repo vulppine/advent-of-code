@@ -85,7 +85,7 @@ mod tests {
 
     #[test]
     fn test_day_two() {
-        let mut test_file = File::open("day_two.input").unwrap();
+        let mut test_file = File::open("res/day_two.input").unwrap();
         let mut test_string: String = String::new();
 
         test_file.read_to_string(&mut test_string).unwrap();

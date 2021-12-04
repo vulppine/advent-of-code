@@ -43,7 +43,7 @@ mod tests {
 
     #[test]
     fn test_day_one() {
-        let mut test_file = File::open("day_one.input").unwrap();
+        let mut test_file = File::open("res/day_one.input").unwrap();
         let mut test_string: String = String::new();
 
         test_file.read_to_string(&mut test_string).unwrap();
