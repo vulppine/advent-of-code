@@ -86,10 +86,6 @@ fn count_bits_per_field(
 
 // this one is *really* ugly - there's probably a better way to do this
 
-fn bit_filter(iter: Box<impl Iterator>) -> Box<impl Iterator> {
-    Box::new(iter.take_while(|i| true))
-}
-
 // named against the challenge desc
 // because i don't know if this is a
 // mathematical property
@@ -112,8 +108,6 @@ fn get_oxy_rating(mut word_vec: Vec<usize>, field_count: usize) -> usize {
             .into_iter()
             .filter(|i| get_nth_bit_in_word(*i, current_bit) != common_bit)
             .collect::<Vec<usize>>();
-
-        println!("{:?}", word_vec);
 
         // ??? why
         if current_bit == 0 {
@@ -207,8 +201,8 @@ mod tests {
         let oxy_rating = get_oxy_rating(num_vec.clone(), field_count);
         let co2_rating = get_co2_rating(num_vec.clone(), field_count);
 
-        println!("{}", oxy_rating);
-        println!("{}", co2_rating);
+        println!("o2: {}", oxy_rating);
+        println!("co2: {}", co2_rating);
 
         println!("{}", oxy_rating * co2_rating);
     }
