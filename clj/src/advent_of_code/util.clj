@@ -3,6 +3,9 @@
   (:require [clojure.string :as st])
   (:require [clojure.edn :as edn]))
 
+(defn file-as-seq [file-name]
+  (line-seq (io/reader file-name)))
+
 (defn file-as-list [file-name]
   (let [file (io/file file-name)]
     (seq (st/split-lines (slurp file)))))
