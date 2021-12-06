@@ -186,11 +186,25 @@ mod tests {
     #[test]
     fn test_day_five() {
         let file = File::open("res/day_five.input").unwrap();
-        let mut vmap = VectorMap::from_file(file);
+        let mut vmap_p1 = VectorMap::from_file(file);
 
-        vmap.populate_map();
+        vmap_p1.vectors = vmap_p1
+            .vectors
+            .into_iter()
+            .filter(|v| v.is_level())
+            .collect();
+        vmap_p1.populate_map();
 
-        let count = vmap.map.iter().filter(|v| v.1 > &1).count();
+        let count = vmap_p1.map.iter().filter(|v| v.1 > &1).count();
+
+        println!("{}", count);
+
+        let file = File::open("res/day_five.input").unwrap();
+        let mut vmap_p2 = VectorMap::from_file(file);
+
+        vmap_p2.populate_map();
+
+        let count = vmap_p2.map.iter().filter(|v| v.1 > &1).count();
 
         println!("{}", count);
     }
