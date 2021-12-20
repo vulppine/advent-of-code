@@ -10,6 +10,31 @@ use std::io::{BufRead, BufReader};
 /// Coordinates on a cardinal plane.
 pub type Coordinate = (isize, isize);
 
+#[derive(Clone)]
+pub enum PlaneAxis {
+    X,
+    Y,
+}
+
+impl PlaneAxis {
+    pub fn reflect_coordinate(&self, c: Coordinate, l: isize) -> Coordinate {
+        match self {
+            PlaneAxis::X => ((2 * l) - c.0, c.1),
+            PlaneAxis::Y => (c.0, (2 * l) - c.1),
+        }
+    }
+
+    pub fn from_char(c: char) -> Self {
+        match c {
+            'x' => PlaneAxis::X,
+            'y' => PlaneAxis::Y,
+            _ => {
+                panic!("unsupported");
+            }
+        }
+    }
+}
+
 /// # Direction
 ///
 /// Directions, in cardinal format.
@@ -175,9 +200,42 @@ impl Table<u32> {
     }
 }
 
+pub fn coords_to_table(coords: &mut [Coordinate], mark: char, empty: char) -> Table<char> {
+    let mut t = Table::new();
+    // get the max X of our coordinates (this will dictate
+    // how many columns we have
+    coords.sort_by(|a, b| b.0.cmp(&a.0));
+    let max_x = coords[0].0;
+    // get the max Y of our coordinates (dictates how many
+    // rows we have)
+    coords.sort_by(|a, b| b.1.cmp(&a.1));
+    let max_y = coords[0].1;
+
+    for _ in 0..=max_y {
+        let mut r: Vec<char> = Vec::new();
+        r.resize_with(max_x as usize + 1, || empty);
+        t.insert_row(r);
+    }
+
+    for c in coords {
+        *t.get_elem_mut_at_coord(*c).unwrap() = mark;
+    }
+
+    t
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_coord_table() {
+        let mut coords = [(0, 0), (5, 5)];
+
+        let table = coords_to_table(&mut coords, '#', '.');
+
+        println!("{}", table);
+    }
 
     #[test]
     fn test_table_grabbing() {
