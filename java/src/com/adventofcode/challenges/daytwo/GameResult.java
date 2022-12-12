@@ -10,4 +10,13 @@ public enum GameResult {
     GameResult(int value) {
         this.value = value;
     }
+
+    public static GameResult fromLetter(char letter) {
+        return switch (letter) {
+            case 'X' -> Loss;
+            case 'Y' -> Draw;
+            case 'Z' -> Win;
+            default -> throw new IllegalArgumentException("Invalid letter passed into GameResult");
+        };
+    }
 }

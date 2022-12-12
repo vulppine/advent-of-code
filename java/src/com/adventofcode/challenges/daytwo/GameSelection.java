@@ -41,4 +41,20 @@ public enum GameSelection {
             };
         };
     }
+
+    public static GameSelection getResult(GameSelection selection, GameResult intendedResult) {
+        return switch (intendedResult) {
+            case Win -> switch (selection) {
+                case Rock -> Paper;
+                case Paper -> Scissors;
+                case Scissors -> Rock;
+            };
+            case Draw -> selection;
+            case Loss -> switch (selection) {
+                case Rock -> Scissors;
+                case Paper -> Rock;
+                case Scissors -> Paper;
+            };
+        };
+    }
 }
