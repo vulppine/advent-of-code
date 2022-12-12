@@ -1,9 +1,6 @@
 package com.adventofcode.challenges.daytwo;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.Buffer;
 import java.util.ArrayList;
 
@@ -44,5 +41,11 @@ public class DayTwo {
 
     public static DayTwo parseStrategyGuideFromString(String string) throws IOException {
         return parseStrategyGuide(new StringReader(string));
+    }
+
+    public static DayTwo parseStrategyGuideFromFile(String path) throws IOException {
+        var file = new File(path);
+
+        return parseStrategyGuide(new FileReader(file));
     }
 }
