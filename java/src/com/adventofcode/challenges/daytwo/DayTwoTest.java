@@ -16,7 +16,7 @@ public class DayTwoTest {
                 """);
          */
 
-        var game = DayTwo.parseStrategyGuideFromFile("../input/day_two.test");
+        var game = DayTwo.parseStrategyGuideFromFile("../input/day_two.test", new GameStrategyBothSelectParser());
 
         var result = game.getScore();
 
@@ -25,7 +25,7 @@ public class DayTwoTest {
 
     @Test
     public void PartOne() throws IOException {
-        var game = DayTwo.parseStrategyGuideFromFile("../input/day_two.input");
+        var game = DayTwo.parseStrategyGuideFromFile("../input/day_two.input", new GameStrategyBothSelectParser());
 
         var result = game.getScore();
 

@@ -16,7 +16,7 @@ public class DayTwo {
         return result;
     }
 
-    public static DayTwo parseStrategyGuide(Reader reader) throws IOException {
+    public static DayTwo parseStrategyGuide(Reader reader, GameStrategyParser parser) throws IOException {
         var buffered = new BufferedReader(reader);
         var line = buffered.readLine();
         var result = new DayTwo();
@@ -26,12 +26,10 @@ public class DayTwo {
                 throw new IllegalArgumentException("Too many characters in line");
             }
 
-            var strategy = new GameRound(
-                    GameSelection.fromLetter(line.charAt(0)),
-                    GameSelection.fromLetter(line.charAt(2))
-            );
+            var round = parser.getStrategy(line.charAt(0), line.charAt(2));
 
-            result.rounds.add(strategy);
+
+            result.rounds.add(round);
 
             line = buffered.readLine();
         }
@@ -39,13 +37,13 @@ public class DayTwo {
         return result;
     }
 
-    public static DayTwo parseStrategyGuideFromString(String string) throws IOException {
-        return parseStrategyGuide(new StringReader(string));
+    public static DayTwo parseStrategyGuideFromString(String string, GameStrategyParser parser) throws IOException {
+        return parseStrategyGuide(new StringReader(string), parser);
     }
 
-    public static DayTwo parseStrategyGuideFromFile(String path) throws IOException {
+    public static DayTwo parseStrategyGuideFromFile(String path, GameStrategyParser parser) throws IOException {
         var file = new File(path);
 
-        return parseStrategyGuide(new FileReader(file));
+        return parseStrategyGuide(new FileReader(file), parser);
     }
 }
