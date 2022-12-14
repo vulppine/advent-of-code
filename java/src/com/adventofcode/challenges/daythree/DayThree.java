@@ -1,9 +1,6 @@
 package com.adventofcode.challenges.daythree;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.Buffer;
 import java.util.*;
 
@@ -41,6 +38,29 @@ public class DayThree {
         return score;
     }
 
+    public int getGroupScores() {
+        var groupScores = 0;
+        for (var i = 0; i <= rucksacks.size() - 3; i = i + 3) {
+            groupScores += sumGroupScore(i, i + 3);
+        }
+
+        return groupScores;
+    }
+
+    public int sumGroupScore(int start, int end) {
+        var resultSet = new HashSet<>(rucksacks.get(start).unionCompartments());
+        for (var i = start + 1; i < end; i++) {
+            resultSet.retainAll(rucksacks.get(i).unionCompartments()) ;
+        }
+
+        var resultScore = 0;
+        for (var c : resultSet) {
+            resultScore += getPriority(c);
+        }
+
+        return resultScore;
+    }
+
     public static DayThree parseFromInput(Reader input) throws IOException {
         var result = new DayThree();
         var buffered = new BufferedReader(input);
@@ -59,6 +79,10 @@ public class DayThree {
 
     public static DayThree parseFromString(String input) throws IOException {
         return parseFromInput(new StringReader(input));
+    }
+
+    public static DayThree parseFromFile(String path) throws IOException {
+        return parseFromInput(new FileReader(path));
     }
 }
 

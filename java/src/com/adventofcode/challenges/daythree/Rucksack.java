@@ -15,6 +15,12 @@ public class Rucksack {
         return copy.stream().toList();
     }
 
+    public Set<Character> unionCompartments() {
+        var result = new HashSet<>(firstCompartment);
+        result.addAll(secondCompartment);
+        return result;
+    }
+
     // OOP-y way to do it would be to decorate or w/e tbh
     public void populateCompartments(char[] chars) {
         // it would be NICE if we had SLICES
